@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----- Headings ----- */
+
+h1 {
+  @apply text-4xl text-center text-violet-600 font-bold mt-5 mb-8;
+}
+
+h2.question {
+  @apply text-violet-600 font-semibold md:text-3xl text-xl;
+}
+
+h2.score-title {
+  @apply text-3xl font-bold mt-5;
+}
+
+h2.score-result {
+  @apply text-3xl font-bold mt-3 mb-10;
+}
+
+/* ----- Buttons ----- */
+
+.start-button {
+  @apply bg-violet-600 hover:bg-black hover:transition-all text-white uppercase font-semibold rounded px-3 py-2;
+}
+
+.answer-button {
+  @apply border-[1.5px] rounded px-3 py-2 hover:bg-gray-300;
+}
+
+.next-button {
+  @apply absolute -bottom-8 left-0 w-full bg-violet-600 hover:bg-black hover:transition-all text-white uppercase font-semibold rounded-b px-3 py-2;
+}
+
+.restart-button {
+  @apply text-sm text-gray-500 hover:text-violet-600 hover:transition-all mt-10;
+}
+
+.show-answers-button {
+  @apply bg-violet-600 hover:bg-black hover:transition-all text-white uppercase font-semibold rounded px-3 py-2 mt-3 mb-5;
+}
+
+.back-button {
+  @apply bg-black hover:bg-gray-300 text-white hover:text-black hover:transition-all uppercase font-semibold rounded w-full px-3 py-2 mb-5;
+}
+
+/* ----- General styles ----- */
+
+.main-questions {
+  @apply container mx-auto flex items-center justify-center md:w-2/3 w-full h-screen;
+}
+
+.quiz-container-flex-center {
+  @apply relative flex flex-col items-center justify-between w-full bg-white shadow-lg rounded p-5;
+}
+
+#questionSection,
+#controlsSection {
+  @apply w-full;
+}
+
+#answersSection {
+  @apply mt-10 mb-5;
+}
+
+.user-container {
+  @apply flex items-center justify-center gap-1;
+}
+
+.user-container .username-input {
+  @apply border-[2.5px] border-violet-600 px-3 py-1 rounded h-8;
+}
+
+.user-container .username-submit {
+  @apply bg-violet-600 disabled:bg-violet-200 hover:bg-black hover:transition-all text-white px-3 py-1 rounded h-8;
+}
+
+.user-name {
+  @apply text-center text-xl font-semibold mt-5;
+}
+
+.correct {
+  @apply bg-green-600 text-white;
+}
+
+.incorrect {
+  @apply bg-red-600 text-white;
+}
+
+.progress {
+  @apply text-sm text-right text-gray-500;
+}
+
+.score-result span {
+  @apply text-violet-600;
+}
+
+.result-message {
+  @apply text-xl;
+}
+
+/* ----- Answer screen ----- */
+
+.main-answers {
+  @apply container mx-auto flex items-center justify-center md:w-3/4 w-full;
+}
+
+.quiz-container-flex-left {
+  @apply flex flex-col items-start justify-center gap-5 w-full bg-white shadow-lg rounded p-5 pt-10 my-10;
+}
+
+.question-container {
+  @apply border-[1.5px] p-5 w-full;
+}
+
+.question-text {
+  @apply text-lg font-semibold;
+}
+
+.answer-text {
+  @apply px-2 py-1 border-t-[1.5px] border-gray-300;
+}
+
+.answer-text:last-child {
+  @apply border-b-[1.5px] border-gray-300;
+}
