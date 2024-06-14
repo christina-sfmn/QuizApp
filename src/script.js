@@ -3,63 +3,74 @@
 let questions = [
     {
         question: "Which programming language is often used for web development?",
-        answers_false: ["Java", "C#", "Python"],
-        answer_true: "JavaScript",
+        answer_correct: "JavaScript",
+        answers_incorrect: ["Java", "C#", "Python"],
     },
     {
         question: "Which JS Framework does exist?",
-        answers_false: ["Angulara JS", "Init JS", "Reacter JS"],
-        answer_true: "Vue JS",
+        answer_correct: "Vue JS",
+        answers_incorrect: ["Angulara JS", "Init JS", "Reacter JS"],
     },
     {
         question: "Which property is used to define the font style?",
-        answers_false: ["font-family", "font-size", "font-weight"],
-        answer_true: "font-style",
+        answer_correct: "font-style",
+        answers_incorrect: ["font-family", "font-size", "font-weight"],
     },
     {
         question: "What does CSS stand for?",
-        answers_false: [
+        answer_correct: "Cascading Style Sheet",
+        answers_incorrect: [
             "Counter Strike: Source",
             "Computer Style Sheet",
             "Corrective Style Sheet",
         ],
-        answer_true: "Cascading Style Sheet",
     },
     {
         question: "What does HTML stand for?",
-        answers_false: [
+        answer_correct: "HyperText Markup Language",
+        answers_incorrect: [
             "Hyperlinks and Text Markup Language",
             "Home Tool Markup Language",
             "Home Text Marker Language",
         ],
-        answer_true: "Hyper Text Markup Language",
     },
     {
         question: "What is the purpose of the 'git' version control system?",
-        answers_false: ["Text editing", "Database management", "Graphic design"],
-        answer_true: "Version control",
+        answer_correct: "Version control",
+        answers_incorrect: [
+            "Text editing",
+            "Database management",
+            "Graphic design",
+        ],
     },
     {
         question: "What is the correct HTML tag for the largest heading?",
-        answers_false: ["<h6>", "<heading>", "<head>"],
-        answer_true: "<h1>",
+        answer_correct: "<h1>",
+        answers_incorrect: ["<h6>", "<heading>", "<head>"],
     },
     {
         question: "Which of these tags are table tags?",
-        answers_false: ["<table><body><tr>", "<tbody><tt><tfoot>", "<td><tr><te>"],
-        answer_true: "<table><thead><td>",
+        answer_correct: "<table><thead><td>",
+        answers_incorrect: [
+            "<table><body><tr>",
+            "<tbody><tt><tfoot>",
+            "<td><tr><te>",
+        ],
     },
     {
         question: "What is the correct tag for a numbered list?",
-        answers_false: ["<ul>", "<ot>", "<orl>"],
-        answer_true: "<ol>",
+        answer_correct: "<ol>",
+        answers_incorrect: ["<ul>", "<ot>", "<orl>"],
     },
     {
         question: "What is NOT a CSS position?",
-        answers_false: ["<absolute>", "<relative>", "<fixed>"],
-        answer_true: "<floated>",
+        answer_correct: "<floated>",
+        answers_incorrect: ["<absolute>", "<relative>", "<fixed>"],
     },
 ];
+// Add new questions to quiz
+let addingQuestionsMode = false;
+let newQuestions = []; // Array to temporarily save new questions
 let userAnswers = []; // Array to save user answers
 /* ---------- GLOBAL VARIABLES ---------- */
 // Add types for DOM-elements + variables
@@ -75,22 +86,29 @@ let answers = []; // Array to save answers
 let score = 0; // Set initial score to 0
 let questionAnswered = false; // To check if question was already answered
 /* ---------- HOME SCREEN ---------- */
+// Hide answers section
+answersSection.classList.add("hidden");
 // Quiz title
 const quizTitle = document.createElement("h1");
 quizTitle.classList.add("quiz-title");
 quizTitle.innerText = "Web Development Quiz";
 questionSection.appendChild(quizTitle);
-// Enter username
+// Heading for username
+const usernameHeading = document.createElement("h2");
+usernameHeading.classList.add("username-heading");
+usernameHeading.innerText = "Please enter your name";
+questionSection.appendChild(usernameHeading);
+// Container for username
 const userContainer = document.createElement("div");
 userContainer.classList.add("user-container");
 // Input field + button for username
 let usernameInput = document.createElement("input");
 usernameInput.classList.add("username-input");
+userContainer.appendChild(usernameInput);
 const usernameSubmit = document.createElement("button");
 usernameSubmit.classList.add("username-submit");
 usernameSubmit.innerText = "Ok";
 usernameSubmit.addEventListener("click", () => submitName(usernameInput));
-userContainer.appendChild(usernameInput);
 userContainer.appendChild(usernameSubmit);
 questionSection.appendChild(userContainer);
 // Start button
@@ -98,9 +116,16 @@ const startButton = document.createElement("button");
 startButton.classList.add("start-button");
 startButton.innerText = "Start quiz!";
 startButton.addEventListener("click", () => startQuiz());
-answersSection.appendChild(startButton);
+controlsSection.appendChild(startButton);
+// Button to add own questions
+const addQuestionsButton = document.createElement("button");
+addQuestionsButton.classList.add("add-questions-button");
+addQuestionsButton.innerText = "Add own questions";
+addQuestionsButton.addEventListener("click", () => showQuestionInput());
+controlsSection.appendChild(addQuestionsButton);
 /* ---------- SUBMIT NAME ---------- */
 function submitName(usernameInput) {
+    usernameHeading.innerText = ""; // Clear heading
     // Check if name was entered
     if (usernameInput.value === "") {
         alert("Please enter your name!");
@@ -114,6 +139,96 @@ function submitName(usernameInput) {
         "Hello " + usernameInput.value + "! " + "Let's start the quiz!";
     questionSection.appendChild(userName);
 }
+/* ---------- SUBMIT OWN QUESTIONS ---------- */
+function showQuestionInput() {
+    questionSection.innerHTML = ""; // Clear question section
+    controlsSection.innerHTML = ""; // Clear controls section
+    addingQuestionsMode = true;
+    // Container for question input
+    const questionInputContainer = document.createElement("div");
+    questionInputContainer.classList.add("question-input-container");
+    // Create heading + input fields for new questions + answers
+    const questionInputTitle = document.createElement("h2");
+    questionInputTitle.classList.add("question-input-title");
+    questionInputTitle.innerText = "Enter your questions";
+    questionInputContainer.appendChild(questionInputTitle);
+    const questionInput = document.createElement("input");
+    questionInput.classList.add("question-input-field");
+    questionInput.placeholder = "Your question";
+    questionInputContainer.appendChild(questionInput);
+    const correctAnswerInput = document.createElement("input");
+    correctAnswerInput.classList.add("answer-input-field");
+    correctAnswerInput.placeholder = "Correct answer";
+    questionInputContainer.appendChild(correctAnswerInput);
+    const incorrectAnswerInput1 = document.createElement("input");
+    incorrectAnswerInput1.classList.add("answer-input-field");
+    incorrectAnswerInput1.placeholder = "Incorrect answer 1";
+    questionInputContainer.appendChild(incorrectAnswerInput1);
+    const incorrectAnswerInput2 = document.createElement("input");
+    incorrectAnswerInput2.classList.add("answer-input-field");
+    incorrectAnswerInput2.placeholder = "Incorrect answer 2";
+    questionInputContainer.appendChild(incorrectAnswerInput2);
+    const incorrectAnswerInput3 = document.createElement("input");
+    incorrectAnswerInput3.classList.add("answer-input-field");
+    incorrectAnswerInput3.placeholder = "Incorrect answer 3";
+    questionInputContainer.appendChild(incorrectAnswerInput3);
+    // Container for buttons
+    const questionInputButtonContainer = document.createElement("div");
+    questionInputButtonContainer.classList.add("question-input-button-container");
+    // Add question button
+    const addQuestionButton = document.createElement("button");
+    addQuestionButton.classList.add("add-question-button");
+    addQuestionButton.innerText = "Add question";
+    addQuestionButton.addEventListener("click", () => {
+        // Check if all inputs fields were filled
+        if (questionInput.value === "" ||
+            correctAnswerInput.value === "" ||
+            incorrectAnswerInput1.value === "" ||
+            incorrectAnswerInput2.value === "" ||
+            incorrectAnswerInput3.value === "") {
+            alert("Please fill out all fields!");
+            return;
+        }
+        addNewQuestion(questionInput.value, correctAnswerInput.value, incorrectAnswerInput1.value, incorrectAnswerInput2.value, incorrectAnswerInput3.value);
+        // Clear input fields
+        questionInput.value = "";
+        correctAnswerInput.value = "";
+        incorrectAnswerInput1.value = "";
+        incorrectAnswerInput2.value = "";
+        incorrectAnswerInput3.value = "";
+    });
+    questionInputButtonContainer.appendChild(addQuestionButton);
+    // Done button
+    const doneButton = document.createElement("button");
+    doneButton.classList.add("done-button");
+    doneButton.innerText = "Done";
+    doneButton.addEventListener("click", () => {
+        addingQuestionsMode = false;
+        questions = questions.concat(newQuestions); // Add new questions to question array
+        newQuestions = []; // Clear new questions array
+        reloadHomeScreen(); // Go back to home screen
+    });
+    questionInputButtonContainer.appendChild(doneButton);
+    questionSection.appendChild(questionInputContainer);
+    controlsSection.appendChild(questionInputButtonContainer);
+}
+/* ---------- ADD NEW QUESTION TO QUIZ ---------- */
+// Spread operator "..." needs to be in the last position of the function; in array the spread operator can be anywhere
+function addNewQuestion(question, answer_correct, ...answers_incorrect) {
+    const newQuestion = { question, answer_correct, answers_incorrect };
+    newQuestions.push(newQuestion);
+}
+/* ---------- RELOAD HOME SCREEN ---------- */
+function reloadHomeScreen() {
+    questionSection.innerHTML = ""; // Clear question section
+    controlsSection.innerHTML = ""; // Clear controls section
+    // Rebuild home screen
+    questionSection.appendChild(quizTitle);
+    questionSection.appendChild(usernameHeading);
+    questionSection.appendChild(userContainer);
+    controlsSection.appendChild(startButton);
+    controlsSection.appendChild(addQuestionsButton);
+}
 /* ---------- START QUIZ ---------- */
 function startQuiz() {
     // Check if name was submitted
@@ -121,9 +236,10 @@ function startQuiz() {
         alert("Please submit your name!");
         return;
     }
+    answersSection.classList.remove("hidden"); // Show answers section
+    startButton.classList.add("hidden"); // Hide start button after quiz has started
     mixQuestions();
     displayQuestion();
-    startButton.classList.add("hidden"); // Hide start button after quiz has started
 }
 /* ---------- MIX QUESTIONS ---------- */
 function mixQuestions() {
@@ -132,8 +248,8 @@ function mixQuestions() {
 }
 /* ---------- DISPLAY QUESTIONS ---------- */
 function displayQuestion() {
-    questionSection.innerHTML = ""; // Empty questions section
-    controlsSection.innerHTML = ""; // Empty controls section
+    questionSection.innerHTML = ""; // Clear questions section
+    controlsSection.innerHTML = ""; // Clear controls section
     questionAnswered = false; // Reset question status
     // Check if index is lower than total number of questions
     if (currentQuestionIndex < mixedQuestions.length) {
@@ -142,10 +258,14 @@ function displayQuestion() {
         questionText.classList.add("question");
         questionText.innerText = currentQuestion.question;
         questionSection.appendChild(questionText);
-        // Save all answers in new array; ... = spread operator -> expands bzw. "zerpflückt" array into its elements
-        answers = [...currentQuestion.answers_false, currentQuestion.answer_true];
+        // Save all answers in new array; "..." = spread operator -> divides array into its elements
+        // Spread operator "..." in array can be in first or last position; see function "addNewQuestion" -> in function it has to be in last position
+        answers = [
+            currentQuestion.answer_correct,
+            ...currentQuestion.answers_incorrect,
+        ];
         answers = answers.sort(() => Math.random() - Math.random()); // Mix answers the same way like questions above
-        answersSection.innerHTML = ""; // Empty answers section
+        answersSection.innerHTML = ""; // Clear answers section
         // Create button for each answer + add to answers section
         answers.forEach((answer) => {
             const answerButton = document.createElement("button");
@@ -187,8 +307,8 @@ function checkAnswer(answer, answerButton) {
     currentQuestion = mixedQuestions[currentQuestionIndex]; // Set current question
     currentQuestionIndex++; // Increment question index
     questionAnswered = true; // Set question status as answered
-    // Check if answer is true or false
-    const correctAnswer = answer === currentQuestion.answer_true;
+    // Check if answer is correct or incorrect
+    const correctAnswer = answer === currentQuestion.answer_correct;
     if (correctAnswer) {
         answerButton.classList.add("correct");
         score += 1; // Add 1 point to score
@@ -199,8 +319,11 @@ function checkAnswer(answer, answerButton) {
     // Save user answer to array
     userAnswers.push({
         question: currentQuestion.question,
-        answers: [...currentQuestion.answers_false, currentQuestion.answer_true],
-        correctAnswer: currentQuestion.answer_true,
+        answers: [
+            currentQuestion.answer_correct,
+            ...currentQuestion.answers_incorrect,
+        ],
+        correctAnswer: currentQuestion.answer_correct,
         userAnswer: answer,
         isCorrect: correctAnswer,
     });
@@ -209,30 +332,30 @@ function checkAnswer(answer, answerButton) {
 function showResult() {
     main.classList.remove("main-answers"); // Remove class to style main
     main.classList.add("main-questions"); // Add class to style main
-    quizContainer.innerHTML = ""; // Empty container
+    quizContainer.innerHTML = ""; // Clear container
     quizContainer.classList.remove("quiz-container-flex-left"); // Remove class to style container
     quizContainer.classList.add("quiz-container-flex-center"); // Add class to style container
-    controlsSection.innerHTML = ""; // Empty controls section to remove "next"-button
+    controlsSection.innerHTML = ""; // Clear controls section to remove "next"-button
     // Create elements for score + reset
     const scoreTitle = document.createElement("h2");
     scoreTitle.classList.add("score-title");
     scoreTitle.innerText = "Your final score:";
+    quizContainer.appendChild(scoreTitle);
     const scoreResult = document.createElement("h2");
     scoreResult.classList.add("score-result");
     scoreResult.innerHTML = `${score} / <span>${questions.length}</span>`;
+    quizContainer.appendChild(scoreResult);
     const restartButton = document.createElement("button");
     restartButton.classList.add("restart-button");
     restartButton.innerText = "restart quiz";
     restartButton.addEventListener("click", () => location.reload());
+    controlsSection.appendChild(restartButton);
     const showAnswersButton = document.createElement("button");
     showAnswersButton.classList.add("show-answers-button");
     showAnswersButton.innerText = "Check questions";
     showAnswersButton.addEventListener("click", showAllAnsweredQuestions);
-    quizContainer.appendChild(scoreTitle);
-    quizContainer.appendChild(scoreResult);
-    calculateResult();
-    controlsSection.appendChild(restartButton);
     controlsSection.appendChild(showAnswersButton);
+    calculateResult();
     quizContainer.appendChild(controlsSection);
 }
 /* ---------- CALCULATE RESULT IN % ---------- */
@@ -242,11 +365,11 @@ function calculateResult() {
     const resultMessage = document.createElement("p");
     resultMessage.classList.add("result-message");
     if (resultPercentage < 30) {
-        resultMessage.innerText =
-            "Ouch! Try again, " + usernameInput.value + "!";
+        resultMessage.innerText = "Ouch! Try again, " + usernameInput.value + "!";
     }
     if (resultPercentage >= 30 && resultPercentage <= 50) {
-        resultMessage.innerText = "There is room for improvement, " + usernameInput.value + "!";
+        resultMessage.innerText =
+            "There is room for improvement, " + usernameInput.value + "!";
     }
     if (resultPercentage > 50) {
         resultMessage.innerText =
@@ -261,7 +384,7 @@ function calculateResult() {
 function showAllAnsweredQuestions() {
     main.classList.remove("main-questions"); // Remove class to style main
     main.classList.add("main-answers"); // Add class to style main
-    quizContainer.innerHTML = ""; // Empty container
+    quizContainer.innerHTML = ""; // Clear container
     quizContainer.classList.remove("quiz-container-flex-center"); // Remove class to style container
     quizContainer.classList.add("quiz-container-flex-left"); // Add class to style container
     // Create div for each answered question
@@ -284,10 +407,10 @@ function showAllAnsweredQuestions() {
             }
             if (answer === userAnswer.userAnswer) {
                 if (userAnswer.isCorrect) {
-                    answerText.classList.add("correct");
+                    answerText.classList.add("user-correct");
                 }
                 else {
-                    answerText.classList.add("incorrect");
+                    answerText.classList.add("user-incorrect");
                 }
             }
             questionContainer.appendChild(answerText);

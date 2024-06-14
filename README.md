@@ -13,7 +13,7 @@ Quiz application with questions on the topic of web development, created with HT
 
 ## About the project
 
-This quiz app presents the user with a series of multiple-choice questions. The questions are selected randomly, and the answers are also displayed in a mixed order. The user can only answer each question once. At the beginning the name must be entered and at the end of the quiz a score and a personal message are displayed. Additionally, all answered questions can be reviewed as well as correct or incorrect answers can be compared.
+This quiz app presents the user with a series of multiple-choice questions. The questions are selected randomly, and the answers are also displayed in a mixed order. The user can only answer each question once. At the beginning the name must be entered and at the end of the quiz a score and a personal message are displayed. Additionally, all answered questions can be reviewed as well as correct or incorrect answers can be compared. It is also possible to add your own questions to the quiz.
 
 ## Technologies used
 
@@ -70,6 +70,7 @@ quizapp/
 
 - The questions and answers are stored in an array.
 - Before starting the username must be entered, followed by a short message.
+- There is the possibility to add your own questions before starting the quiz.
 - At the start of the quiz the questions are shuffled randomly.
 - Each question is displayed with multiple answer choices, which are also shuffled.
 - Each new question page includes a progress bar indicating how many questions are left.
@@ -83,7 +84,7 @@ quizapp/
 ## Customization
 
 - **Adjust questions and answers:**
-  To add new questions or modify existing one edit the questions array in the script.ts file.
+  To add new questions or modify existing ones you can edit the questions array in the script.ts file. To only temporarily add new questions to the quiz it is also possible to enter them directly via the starting screen.
 
 - **Adjust styles**
-  TailwindCSS classes can be used in index.htm or custom CSS styles can be added in the input.css file.
+  TailwindCSS classes can be used in index.html or custom CSS styles can be added in the input.css file.
