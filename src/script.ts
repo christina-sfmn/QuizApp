@@ -266,7 +266,7 @@ function checkAnswer(answer: string, answerButton: HTMLButtonElement): void {
 
 /* ---------- SHOW RESULT ---------- */
 
-function showResult() {
+function showResult(): void {
   main.classList.remove("main-answers"); // Remove class to style main
   main.classList.add("main-questions"); // Add class to style main
 
@@ -307,7 +307,7 @@ function showResult() {
 
 /* ---------- CALCULATE RESULT IN % ---------- */
 
-function calculateResult() {
+function calculateResult(): void {
   let resultPercentage = (score / questions.length) * 100; // Calculate percentage of result
 
   // Result message
@@ -334,7 +334,7 @@ function calculateResult() {
 
 /* ---------- SHOW ALL ANSWERED QUESTIONS ---------- */
 
-function showAllAnsweredQuestions() {
+function showAllAnsweredQuestions(): void {
   main.classList.remove("main-questions"); // Remove class to style main
   main.classList.add("main-answers"); // Add class to style main
 
