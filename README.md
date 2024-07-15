@@ -1,6 +1,6 @@
 # Quiz App
 
-Quiz application with questions on the topic of web development, created with HTML, TypeScript, and TailwindCSS.
+Quiz application with questions on the topic of web development, created with HTML, TypeScript, and Tailwind CSS.
 
 ## Table of contents
 
@@ -19,11 +19,11 @@ This quiz app presents the user with a series of multiple-choice questions. The 
 
 - HTML
 - TypeScript
-- [TailwindCSS](https://tailwindcss.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Installation and execution
 
-1. **Clone the project::**
+1. **Clone the project:**
 
    ```bash
    git clone https://github.com/christina-sfmn/quizapp.git
@@ -32,11 +32,15 @@ This quiz app presents the user with a series of multiple-choice questions. The 
 
 2. **Install dependencies:**
 
-This application does not use additional dependencies outside of TailwindCSS and TypeScript. Ensure that the TailwindCSS file and TypeScript are present in the project.
+   ```bash
+   npm install
+   ```
+
+   This application does not use additional dependencies outside of Tailwind CSS and TypeScript. Ensure that the Tailwind CSS file and TypeScript are present in the project.
 
 3. **Run the project:**
 
-Open the index.html file in your preferred web browser.
+   Open the index.html file in your preferred web browser.
 
 ## Project structure
 
@@ -61,7 +65,7 @@ quizapp/
 
 - index.html: The main HTML file that defines the structure of the application.
 - input.css: Custom CSS styles.
-- output.css: TailwindCSS file.
+- output.css: Tailwind CSS file.
 - script.js: Automatically generated JavaScript file.
 - script.ts: TypeScript file containing the logic of the quiz app.
 - README.md: This file.
@@ -87,4 +91,4 @@ quizapp/
   To add new questions or modify existing ones you can edit the questions array in the script.ts file. To only temporarily add new questions to the quiz it is also possible to enter them directly via the starting screen.
 
 - **Adjust styles**
-  TailwindCSS classes can be used in index.html or custom CSS styles can be added in the input.css file.
+  Tailwind CSS classes can be used in index.html or custom CSS styles can be added in the input.css file.
